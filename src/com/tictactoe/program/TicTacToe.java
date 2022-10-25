@@ -7,6 +7,7 @@
 //Use Case 5 is to check for free space before making the desired move.
 //Use Case 6 is to do a toss to check who plays first Player or Computer.
 //Use Case 7 is to allow the Tic Tac Toe App to suggest the player to determine after every move the winner or the tie or change the turn.
+//Use Case 8 is to allow computer to move.
 
 package com.tictactoe.program;
 
@@ -34,24 +35,27 @@ public class TicTacToe {
         //Initialize the object
         TicTacToe obj = new TicTacToe();
 
-        //Starting the game
-        startGame();
-    }
-
-    //Starting the game
-    public static void startGame()
-    {
-        int freeSpace = 9;
-        initialize();//Initialize the board
-        showBoard();//Showing the board
-        chooseOption();//Check for player option
-        toss();//Toss to check that who is going to play first
-        while (freeSpace != 0)
+        initialize();
+        showBoard();
+        chooseOption();
+        toss();
+        if (computerFlag == true)
         {
-            System.out.println();
-            turn();//Check for turn
-            break;
+            System.out.println("Now Player's Turn");
+            playerMove();
+            computerFlag = false;
+            playerFlag = true;
         }
+        else if (playerFlag == true)
+        {
+            System.out.println("Now Computer's Turn");
+            computerMove();//Here it's how computer starts to play like me.
+            playerFlag = false;
+            computerFlag = true;
+        }
+        checkGame();
+        System.out.println("Turn Changed");
+
     }
 
     //Initialization of game
@@ -214,27 +218,7 @@ public class TicTacToe {
             System.out.println("Computer going to win");
         }
         else
-            System.out.println("It may be tie.");
+            System.out.println("It may be a tie.");
     }
 
-    //Turn until its over
-    public static void turn()
-    {
-        if (computerFlag == true)
-        {
-            System.out.println("Now Player's Turn");
-            playerMove();
-            computerFlag = false;
-            playerFlag = true;
-        }
-        else if (playerFlag == true)
-        {
-            System.out.println("Now Computer's Turn");
-            computerMove();
-            playerFlag = false;
-            computerFlag = true;
-        }
-        checkGame();
-        System.out.println("Turn Changed");
-    }
 }
