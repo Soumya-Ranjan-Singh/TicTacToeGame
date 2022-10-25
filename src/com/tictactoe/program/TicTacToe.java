@@ -5,6 +5,7 @@
 //Use Case 3 is to allow player to see the board, so he can choose the valid cells to make his move during his turn.
 //Use Case 4 is to allow player to make a move to a desired location in the board.
 //Use Case 5 is to check for free space before making the desired move.
+//Use Case 6 is to do a toss to check who plays first Player or Computer.
 
 package com.tictactoe.program;
 
@@ -18,9 +19,12 @@ public class TicTacToe {
         System.out.println("Welcome to Tic Tac Toe Game !!!");
     }
 
-    static char[] board = new char[10];
-    static char player, computer;
-    static int playerLocation, computerLocation;
+    //Declaring variables
+    static char[] board = new char[10];//For board
+    static char player, computer;//For assigning x or o
+    static int playerLocation, computerLocation;//For player location
+    static int toss;//For tossing between player and computer
+    static boolean computerFlag = false, playerFlag = false;
     static Scanner scan = new Scanner(System.in);
     static Random random = new Random();
 
@@ -32,12 +36,8 @@ public class TicTacToe {
         obj.initialize();
         //Checking for player choice
         chooseOption();
-        //Showing board
-        showBoard();
-        //Player move
-        playerMove();
-        //Computer move
-        computerMove();
+        //Tossing between Player and computer.
+        toss();
         //Check available space
         checkFreeSpace();
 
@@ -52,10 +52,45 @@ public class TicTacToe {
         }
     }
 
-    //Allow player to choose X or O
-    public static void chooseOption()
+    //Doing a toss for playing first
+    public static void toss()
     {
+        toss = random.nextInt(2);
+        switch (toss)
+        {
+            case 0 :
+                System.out.println("Flipping Tail.\nComputer starts first.");
+                computerMove();//Computer move
+                computerFlag = true;
+                break;
+            case 1 :
+                System.out.println("Flipping Head.\nPlayer starts first.");
+                playerMove();//Player move
+                playerFlag = true;
+                break;
+        }
+        if (computerFlag == true)
+        {
+            System.out.println("Now its Player's turn");
+            System.out.println();
+            playerMove();
+        }
+        else if (playerFlag == true)
+        {
+            System.out.println("Now its Computer's turn");
+            System.out.println();
+            computerMove();
+        }
+    }
+
+    //Allow player to choose X or O
+    public static void chooseOption() {
         System.out.println("Please Select Your Choice Letter : \nProvide 'X' or 'O'");
+        player = check();
+        System.out.println("Player choosing option : "+player);
+    }
+    public static char check()//Sub method of chooseOption
+    {
         char choice = scan.next().charAt(0);
         if (choice == 'X' || choice == 'x')
         {
@@ -67,7 +102,12 @@ public class TicTacToe {
             player = 'O';
             computer = 'X';
         }
-        System.out.println("Player choosing option : "+player);
+        else
+        {
+            System.out.println("Invalid option.\nProvide the valid one");
+            check();
+        }
+        return player;
     }
 
     //To see board
@@ -97,6 +137,7 @@ public class TicTacToe {
                 System.err.println("Ah-hh! Position is already chosen. Enter a valid position");
                 showBoard();
                 playerMove();
+                showBoard();
             }
         }
         else
@@ -120,7 +161,6 @@ public class TicTacToe {
             else if (board[computerLocation] != ' ')
             {
                 computerMove();
-                showBoard();
             }
         }
     }
