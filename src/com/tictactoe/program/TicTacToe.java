@@ -6,6 +6,7 @@
 //Use Case 4 is to allow player to make a move to a desired location in the board.
 //Use Case 5 is to check for free space before making the desired move.
 //Use Case 6 is to do a toss to check who plays first Player or Computer.
+//Use Case 7 is to allow the Tic Tac Toe App to suggest the player to determine after every move the winner or the tie or change the turn.
 
 package com.tictactoe.program;
 
@@ -32,19 +33,29 @@ public class TicTacToe {
 
         //Initialize the object
         TicTacToe obj = new TicTacToe();
-        //Initialize board
-        obj.initialize();
-        //Checking for player choice
-        chooseOption();
-        //Tossing between Player and computer.
-        toss();
-        //Check available space
-        checkFreeSpace();
 
+        //Starting the game
+        startGame();
+    }
+
+    //Starting the game
+    public static void startGame()
+    {
+        int freeSpace = 9;
+        initialize();//Initialize the board
+        showBoard();//Showing the board
+        chooseOption();//Check for player option
+        toss();//Toss to check that who is going to play first
+        while (freeSpace != 0)
+        {
+            System.out.println();
+            turn();//Check for turn
+            break;
+        }
     }
 
     //Initialization of game
-    public void initialize()
+    public static void initialize()
     {
         for (int i = 1; i < 10; i++)
         {
@@ -68,18 +79,6 @@ public class TicTacToe {
                 playerMove();//Player move
                 playerFlag = true;
                 break;
-        }
-        if (computerFlag == true)
-        {
-            System.out.println("Now its Player's turn");
-            System.out.println();
-            playerMove();
-        }
-        else if (playerFlag == true)
-        {
-            System.out.println("Now its Computer's turn");
-            System.out.println();
-            computerMove();
         }
     }
 
@@ -123,7 +122,8 @@ public class TicTacToe {
     //To make the player move
     public static void playerMove()
     {
-        System.out.println("Enter the position between (1-9) you want to make your move first :");
+        checkFreeSpace();
+        System.out.println("Enter the position between (1-9) you want to make your move :");
         playerLocation = scan.nextInt();
         if (playerLocation > 0 && playerLocation < 10)
         {
@@ -186,5 +186,55 @@ public class TicTacToe {
         {
             System.out.println("Free space is available! you have "+numOfFreeSpaces+ " moves left");
         }
+    }
+
+    //Check for winning, tie or change turn
+    public static void checkGame()
+    {
+        if ((board[1] == player && board[2] == player || board[2] == player && board[3] == player || board[1] == player && board[3] == player) ||
+           (board[4] == player && board[5] == player || board[5] == player && board[6] == player || board[4] == player && board[6] == player) ||
+           (board[7] == player && board[8] == player || board[8] == player && board[9] == player || board[7] == player && board[9] == player) ||
+           (board[1] == player && board[5] == player || board[5] == player && board[9] == player || board[1] == player && board[9] == player) ||
+           (board[3] == player && board[5] == player || board[5] == player && board[7] == player || board[3] == player && board[7] == player) ||
+           (board[1] == player && board[4] == player || board[4] == player && board[7] == player || board[1] == player && board[7] == player) ||
+           (board[2] == player && board[5] == player || board[5] == player && board[8] == player || board[2] == player && board[8] == player) ||
+           (board[3] == player && board[6] == player || board[6] == player && board[9] == player || board[3] == player && board[9] == player))
+        {
+            System.out.println("Player going to win");
+        }
+        else if ((board[1] == computer && board[2] == computer || board[2] == computer && board[3] == computer || board[1] == computer && board[3] == computer) ||
+                (board[4] == computer && board[5] == computer || board[5] == computer && board[6] == computer || board[4] == computer && board[6] == computer) ||
+                (board[7] == computer && board[8] == computer || board[8] == computer && board[9] == computer || board[7] == computer && board[9] == computer) ||
+                (board[1] == computer && board[5] == computer || board[5] == computer && board[9] == computer || board[1] == computer && board[9] == computer) ||
+                (board[3] == computer && board[5] == computer || board[5] == computer && board[7] == computer || board[3] == computer && board[7] == computer) ||
+                (board[1] == computer && board[4] == computer || board[4] == computer && board[7] == computer || board[1] == computer && board[7] == computer) ||
+                (board[2] == computer && board[5] == computer || board[5] == computer && board[8] == computer || board[2] == computer && board[8] == computer) ||
+                (board[3] == computer && board[6] == computer || board[6] == computer && board[9] == computer || board[3] == computer && board[9] == computer))
+        {
+            System.out.println("Computer going to win");
+        }
+        else
+            System.out.println("It may be tie.");
+    }
+
+    //Turn until its over
+    public static void turn()
+    {
+        if (computerFlag == true)
+        {
+            System.out.println("Now Player's Turn");
+            playerMove();
+            computerFlag = false;
+            playerFlag = true;
+        }
+        else if (playerFlag == true)
+        {
+            System.out.println("Now Computer's Turn");
+            computerMove();
+            playerFlag = false;
+            computerFlag = true;
+        }
+        checkGame();
+        System.out.println("Turn Changed");
     }
 }
