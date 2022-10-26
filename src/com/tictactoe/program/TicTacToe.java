@@ -11,6 +11,7 @@
 //Use Case 9 is to check block position and allow player to block the opponent.
 //Use Case 10 is to grab the corner position first during playing the game.
 //Use Case 11 is to grab the subsequent choices that is centre or any available sites.
+//Use Case 12 is to play until the game is over i.e - whether you got winner or board is full(tie).
 
 package com.tictactoe.program;
 
@@ -57,10 +58,14 @@ public class TicTacToe {
             turn();
             if (checkWinner())
             {
-                continue;
+                break;
+            }
+            else if (freeSpace == 0)
+            {
+                System.out.println("Board is full");
+                System.out.println("It is a tie");
             }
         }
-
     }
 
     public static boolean checkWinner()
