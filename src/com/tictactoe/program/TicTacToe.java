@@ -9,6 +9,7 @@
 //Use Case 7 is to allow the Tic Tac Toe App to suggest the player to determine after every move the winner or the tie or change the turn.
 //Use Case 8 is to allow computer to move.
 //Use Case 9 is to check block position and allow player to block the opponent.
+//Use Case 10 is to grab the corner position first during playing the game.
 
 package com.tictactoe.program;
 
@@ -164,6 +165,7 @@ public class TicTacToe {
     {
         checkFreeSpace();
         int position = blockUser(computer);
+        essentialPosition();
         if (position == 0)
         {
             System.out.println("No position to be blocked.\nTry to win");
@@ -194,6 +196,29 @@ public class TicTacToe {
         {
             System.err.println("Invalid choice. Provide a valid position between (1-9)");
             playerMove();
+        }
+    }
+
+    //Check for essential position
+    public static void essentialPosition() {
+        for (int i = 1; i < board.length; i++)
+        {
+            if ( i == 1 && board[i] == ' ')
+            {
+                System.out.println("Corner position 1 is available");
+            }
+            else if (i == 3 && board[i] == ' ')
+            {
+                System.out.println("Corner position 3 is available");
+            }
+            else if (i == 7 && board[i] == ' ')
+            {
+                System.out.println("Corner position 7 is available");
+            }
+            else if (i == 9 && board[i] == ' ')
+            {
+                System.out.println("Corner position 9 is available");
+            }
         }
     }
 
