@@ -10,6 +10,7 @@
 //Use Case 8 is to allow computer to move.
 //Use Case 9 is to check block position and allow player to block the opponent.
 //Use Case 10 is to grab the corner position first during playing the game.
+//Use Case 11 is to grab the subsequent choices that is centre or any available sites.
 
 package com.tictactoe.program;
 
@@ -56,14 +57,10 @@ public class TicTacToe {
             turn();
             if (checkWinner())
             {
-                break;
+                continue;
             }
         }
-        if (freeSpace == 0)
-        {
-            System.out.println("Board is full");
-            System.out.println("It is a tie");
-        }
+
     }
 
     public static boolean checkWinner()
@@ -201,23 +198,65 @@ public class TicTacToe {
 
     //Check for essential position
     public static void essentialPosition() {
+        boolean corner = false;
         for (int i = 1; i < board.length; i++)
         {
             if ( i == 1 && board[i] == ' ')
             {
                 System.out.println("Corner position 1 is available");
+                corner = true;
             }
             else if (i == 3 && board[i] == ' ')
             {
                 System.out.println("Corner position 3 is available");
+                corner = true;
             }
             else if (i == 7 && board[i] == ' ')
             {
                 System.out.println("Corner position 7 is available");
+                corner = true;
             }
             else if (i == 9 && board[i] == ' ')
             {
                 System.out.println("Corner position 9 is available");
+                corner = true;
+            }
+        }
+        if (!corner)
+        {
+            System.out.println("No more corner position is available");
+            checkSubsequentPosition();//Checking for subsequent position
+        }
+    }
+
+    //Check Subsequent Position
+    public static void checkSubsequentPosition() {
+        boolean middle = false;
+        if (board[5] == ' ')
+        {
+            System.out.println("Mid position 5 is available");
+            middle = true;
+        }
+        else {
+            for (int i = 2; i < board.length; i=i+2)// i started from 2 because available sides are 2 & 8 for vertical
+                                                    // and 4 & 6 are horizontal sides.
+            {
+                if (i == 2 && board[i] == ' ')
+                {
+                    System.out.println("Side position 2 is available");
+                }
+                else if (i == 4 && board[i] == ' ')
+                {
+                    System.out.println("Side position 4 is available");
+                }
+                else if (i == 6 && board[i] == ' ')
+                {
+                    System.out.println("Side position 6 is available");
+                }
+                else if (i == 8 && board[i] == ' ')
+                {
+                    System.out.println("Side position 8 is available");
+                }
             }
         }
     }
