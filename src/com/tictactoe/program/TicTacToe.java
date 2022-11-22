@@ -99,6 +99,7 @@ public class TicTacToe {
         playerFlag = false;
     }
 
+    //Method to check winner
     public static boolean checkWinner()
     {
         if ((board[1] == player && board[2] == player && board[3] == player) ||
@@ -267,11 +268,9 @@ public class TicTacToe {
 
     //Check Subsequent Position
     public static void checkSubsequentPosition() {
-        boolean middle = false;
         if (board[5] == ' ')
         {
             System.out.println("Mid position 5 is available");
-            middle = true;
         }
         else {
             for (int i = 2; i < board.length; i=i+2)// i started from 2 because available sides are 2 & 8 for vertical
