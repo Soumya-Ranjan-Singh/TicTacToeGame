@@ -41,15 +41,15 @@ public class Game extends Computer {
         showBoard();//Showing the board
         chooseOption();//Check for player option
         toss();//Toss to check that who is going to play first
-        while (CheckConditions.checkTie())//1st run of game
+        while (checkTie())//1st run of game
         {
             System.out.println();
             turn();
-            if (CheckConditions.checkWinner(player,computer))
+            if (checkWinner(player,computer))
             {
                 break;
             }
-            else if (!CheckConditions.checkTie())
+            else if (!checkTie())
             {
                 System.out.println("Board is full");
                 System.out.println("It is a tie");
